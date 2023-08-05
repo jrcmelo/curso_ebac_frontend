@@ -7,31 +7,11 @@ function validaCampo(valorA, valorB) {
     return valorB > valorA;
 }
 
-form.addEventListener('submit', function(event) {
-    event.preventDefault();
-
+function validaFormulario() {
     const valorA = parseFloat(campoA.value);
     const valorB = parseFloat(campoB.value);
-    const mensagemSucesso = `Formulário válido! <b>${valorB}</b> é maior que <b>${valorA}</b>.`;
-    
+
     formEValido = validaCampo(valorA, valorB);
-    //formEValido = valorB > valorA;
-    if (formEValido) {
-        const containerMensagemSucesso = document.querySelector('.success-message');
-        containerMensagemSucesso.innerHTML = mensagemSucesso;
-        containerMensagemSucesso.style.display = 'block';
-
-        campoA.value = '';
-        campoB.value = '';
-    } else {
-        campoA.style.border = '1px solid red';
-        document.querySelector('.error-message').style.display = 'block';
-    }
-});
-
-campoA.addEventListener('keyup', function(event) {
-    console.log(event.target.value);
-    formEValido = validaCampo(event.target.value, campoB);
 
     if (!formEValido) {
         campoA.classList.add('error');
@@ -40,4 +20,29 @@ campoA.addEventListener('keyup', function(event) {
         campoA.classList.remove('error');
         document.querySelector('.error-message').style.display = 'none';
     }
+}
+
+form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const valorA = parseFloat(campoA.value);
+    const valorB = parseFloat(campoB.value);
+    const mensagemSucesso = `Formulário válido! <b>${valorB}</b> é maior que <b>${valorA}</b>.`;
+    
+    formEValido = validaCampo(valorA, valorB);
+    
+    if (formEValido) {
+        const containerMensagemSucesso = document.querySelector('.success-message');
+        containerMensagemSucesso.innerHTML = mensagemSucesso;
+        containerMensagemSucesso.style.display = 'block';
+
+        campoA.value = '';
+        campoB.value = '';
+    } else {
+        campoA.classList.add('error');
+        document.querySelector('.error-message').style.display = 'block';
+    }
 });
+
+campoA.addEventListener('keyup', validaFormulario);
+campoB.addEventListener('keyup', validaFormulario);
